@@ -1,7 +1,6 @@
 INCLUDE_DIRS = 
 LIB_DIRS = 
-CROSS_COMPILE=gcc
-CC=gcc
+CC=$(CROSS_COMPILE)gcc
 
 CDEFS= 
 CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
@@ -23,13 +22,10 @@ clean:
 	-rm -f ${PRODUCT} ${GARBAGE}
 
 writer:	writer.o
-	$(CROSS_COMPILE) $(LDFLAGS) $(CFLAGS) -o $@ writer.o $(LIBS)
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ writer.o $(LIBS)
    
-#temp: writer.o
-#	$(CROSS_COMPILE) $(LDFLAGS) $(CFLAGS) -o $@ writer.o $(LIBS)
-
 
 depend:
 
 .c.o:
-	$(CROSS_COMPILE) -MD $(CFLAGS) -c $<
+	$(CC) -MD $(CFLAGS) -c $<

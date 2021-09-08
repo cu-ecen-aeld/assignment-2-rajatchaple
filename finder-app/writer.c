@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
   int write_status;
   int file_descriptor;
   int close_status;
+  char *file_name;
+  char *write_str;
   
   openlog("writer", 0, LOG_USER);  //setting up explicitly LOG_USER facility (usually its default set to user)
 
@@ -41,11 +43,14 @@ int main(int argc, char *argv[])
     exit(EXIT_FAILURE);
   }
 
-  LOG_DBG("Writing %s to %s\n", argv[2], argv[1]);
+  file_name = argv[1]; //file
+  write_str = argv[2]; //string
+
+  LOG_DBG("Writing %s to %s\n", write_str, file_name);
   
  
   //Creating a file
-  file_descriptor = creat(argv[1],0777);
+  file_descriptor = creat(file_name, 0777);
   if(file_descriptor == -1)
   {
     LOG_ERROR("file could not be created\n");  
@@ -53,7 +58,7 @@ int main(int argc, char *argv[])
   }
   
   //Writing a string into a file
-  write_status = write (file_descriptor, argv[2], strlen (argv[2]));
+  write_status = write (file_descriptor, write_str, strlen (write_str));
   if (write_status == -1)
     LOG_ERROR("File could not be written\n");
 
